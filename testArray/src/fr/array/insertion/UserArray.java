@@ -48,6 +48,7 @@ public class UserArray {
 				break;
 			}
 		}
+		System.out.println("bye bye");
 	}
 
 }

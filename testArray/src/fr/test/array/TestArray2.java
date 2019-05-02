@@ -29,12 +29,12 @@ public class TestArray2 {
 		//compute the number of repeating numbers
 		System.out.println("=========repeating numbers==========");
 		int numberOfRepeatedValue = 0;
-		boolean[] alreadyChecked = new boolean[array.length];
+		boolean[] alreadyChecked = new boolean[array.length]; //table of already checked index
 		boolean repeatingNumberSpoted = false;
 		for(int i = 0; i < array.length - 1; i++) {
-			repeatingNumberSpoted = false;
+			repeatingNumberSpoted = false; //variable to check if we already spot the same number on the way
 			if(alreadyChecked[i]) {
-				continue;
+				continue; //if we have already checked the value we can continue
 			}
 			for(int j = i+1; j < array.length; j++) {
 				if(array[i] == array[j]) {

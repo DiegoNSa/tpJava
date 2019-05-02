@@ -6,19 +6,21 @@ public class TestFibonacci {
 
 	//iterative version of fibonacci sequence
 	public static int fibo(int index) {
-		int a = 0;
-		int b = 1;
+		int a = 0; //previous value
+		int b = 1; //current value
 		if(index == 0) {
 			return a;
 		}
 		for(int n = 1; n < index;n++) {
-			b=a+b;
-			a = b-a;
+			//update the fibonacci values.
+			b=a+b; //b' = a + b
+			a = b-a; //a' = b'-a = a + b - a = b
 		}
-		return b;
+		return b; //return the fibonacci value for given rank
 	}
 	
 	public static void main(String[] args) {
+		String[] blabla = new String  [3];
 		Scanner questionUser = new Scanner(System.in);
 
 		System.out.println("rank :");
