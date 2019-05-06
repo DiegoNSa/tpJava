@@ -20,7 +20,7 @@ public class TestFibonacci {
 	}
 	
 	public static void main(String[] args) {
-		String[] blabla = new String  [3];
+		
 		Scanner questionUser = new Scanner(System.in);
 
 		System.out.println("rank :");
