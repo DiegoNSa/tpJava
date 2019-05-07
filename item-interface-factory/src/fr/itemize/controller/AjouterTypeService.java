@@ -1,21 +1,36 @@
 package fr.itemize.controller;
 
-import fr.pizzeria.mem.PizzaDao;
-import fr.pizzeria.model.Pizza;
+import java.util.ArrayList;
+import fr.itemize.mem.*;
+import fr.itemize.model.*;
 
-public class AjouterTypeService {
-	public void executerUC(GlobalDao pizzaDataBase) {
-		System.out.println("Ajout d'une nouvelle pizza");
-		String newCode = inputCode(pizzaDataBase.findAllPizzas());
-		System.out.println("Veuillez saisir le nom (sans espace)");
-		String newName = questionUser.next();
-		System.out.println("Veuillez saisir le prix");
-		double newPrice = inputDouble();
+public class AjouterTypeService extends MenuService {
+	public void executerUC(GlobalDao globalDataBase) {
+		ArrayList<String> parameterList = new ArrayList<String>();
+		
+		System.out.println("Ajout d'un nouveau type");
+		String newTypeName = "";
+		do {
+			newTypeName = questionUser.next();
+		}while(globalDataBase.myObjectDao.typeExists(newTypeName));
+		
+		
+		
+		while(true) {
+			System.out.println("veuillez entrer un nouveau nom de parametre (/stop pour arreter)");
+			String newParameter = questionUser.next();
+			if(newParameter.equals("/stop")) {
+				break;
+			}
+			if(parameterList.indexOf(newParameter) == -1) {
+				parameterList.add(newParameter);
+			}
+		}
+			
+		//create the pizza and add it to the list
+		FactoryType newType = new FactoryType(newTypeName, parameterList);
 		
 		//create the pizza and add it to the list
-		Pizza newPizza = new Pizza(newCode, newName, newPrice);
-		
-		//create the pizza and add it to the list
-		pizzaDataBase.saveNewPizza(newPizza);
+		globalDataBase.myObjectDao.addNewType(newType);
 	}
 }

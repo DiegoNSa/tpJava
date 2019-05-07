@@ -1,32 +1,42 @@
 package fr.itemize.mem;
 
-import fr.pizzeria.model.FactoryType;
+import fr.itemize.model.FactoryItem;
+import fr.itemize.model.FactoryType;
+
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class ItemDao implements IObjectDao {
 	
-	Hashtable<String,FactoryType> typeTable = new Hashtable<String,FactoryType>();
+	ArrayList<FactoryItem> itemList = new ArrayList<FactoryItem>();
 	
-	public String[] findAllType() {
-		int tableSize = typeTable.keySet().size();
-		String[] typeList = new String[tableSize];
-		int i = 0;
-		for(String key : typeTable.keySet()) {
-			typeList[i++] = key;
-		}
-		return typeList;
+	public ArrayList<FactoryItem> findAllItem() {
+		return itemList;
 	}
-	public void addNewType(FactoryType type) {
-		if(typeTable.get(type.typeName) == null) {
-			typeTable.put(type.typeName, type);	
-		}
-		
+	
+	public void addNewItem(FactoryItem type) {
+		itemList.add(type);
 	}
 	public void deleteType(String codeType) {
-		typeTable.remove(codeType);
+		itemList.remove(this.getItem(codeType));
 	}
 
-	public boolean typeExists(String codeType) {
-		return typeTable.get(codeType) != null;
+	public FactoryItem getItem(String codeItem) {
+		for(FactoryItem item : itemList) {
+			if(item.code.equals(codeItem)) {
+				return item;
+			}
+		}
+		return null;
+	}
+	
+	
+	public boolean ItemExists(String codeItem) {
+		for(FactoryItem item : itemList) {
+			if(item.code.equals(codeItem)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

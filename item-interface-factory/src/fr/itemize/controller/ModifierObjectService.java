@@ -1,7 +1,7 @@
 package fr.itemize.controller;
 
-import fr.pizzeria.mem.PizzaDao;
-import fr.pizzeria.model.Pizza;
+import fr.itemize.mem.*;
+import fr.itemize.model.*;
 
 public class ModifierObjectService extends MenuService {
 

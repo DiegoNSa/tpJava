@@ -3,10 +3,10 @@ package fr.itemize.controller;
 
 import java.util.Scanner;
 
-import fr.pizzeria.mem.*;
-import fr.pizzeria.model.*;
+import fr.itemize.mem.*;
+import fr.itemize.model.*;
 
-public abstract class MenuServiceFactory {
+public abstract class MenuService {
 		
 		protected static Scanner questionUser = new Scanner(System.in);
  

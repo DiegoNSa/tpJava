@@ -1,5 +1,5 @@
 package fr.itemize.controller;
-import fr.pizzeria.mem.*;
+import fr.itemize.mem.*;
 
 public class SupprimerObjectService extends MenuService {
 

@@ -1,18 +1,18 @@
 package fr.itemize.service;
 
-import fr.pizzeria.controler.*;
-public class MenuServiceItemFactory {
+import fr.itemize.controller.*;
+public class MenuServiceFactory {
 	
-	public MenuServiceFactory getService(int serviceCode) {
+	public MenuService getService(int serviceCode) {
 		switch(serviceCode) {
 			case 1:
-				return new ListerObjectService();
+				return new ListerTypeService();
 			case 2:
-				return new AjouterObjectService();
+				return new AjouterTypeService();
 			case 3:
-				return new ModifierObjectService();
+				return new AjouterObjectService();
 			case 4 :
-				return new SupprimerObjectService();
+				return new ListerObjectService();
 			default:
 				return new InvalideService();
 		}

@@ -1,10 +1,13 @@
 package fr.itemize.mem;
 
-import fr.pizzeria.model.*;
+import java.util.ArrayList;
+
+import fr.itemize.model.*;
 
 public interface IItemDao {
-	String[] findAllType();
-	void addNewType(FactoryType type);
-	void deleteType(String codeType);
-	boolean typeExists(String codeType);
+	ArrayList<FactoryItem> findAllItem();
+	public FactoryItem getItem(String codeItem);
+	void addNewItem(FactoryItem item);
+	void deleteItem(String codeItem);
+	boolean ItemExists(String codeItem);
 }

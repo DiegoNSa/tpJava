@@ -1,9 +1,9 @@
 package fr.itemize.controller;
 
-import fr.pizzeria.mem.PizzaDao;
-import fr.pizzeria.model.Pizza;
+import fr.itemize.mem.*;
+import fr.itemize.model.*;
 
-public class InvalideService extends MenuServiceFactory {
+public class InvalideService extends MenuService {
 
 	public void executerUC(GlobalDao pizzaDataBase) {
 		System.out.println("Erreur : Option Invalide");

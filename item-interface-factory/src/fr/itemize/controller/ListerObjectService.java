@@ -1,16 +1,16 @@
 package fr.itemize.controller;
-import fr.pizzeria.mem.PizzaDao;
-import fr.pizzeria.model.Pizza;
+import fr.itemize.mem.*;
+import fr.itemize.model.*;
 
 public class ListerObjectService extends MenuService {
 
-	public void executerUC(GlobalDao pizzaDataBase) {
+	public void executerUC(GlobalDao globalDataBase) {
 		System.out.println("Liste des Pizza");
-		for(int i=0;i < pizzaDataBase.findAllPizzas().length; i++) {
-			Pizza currentPizza = pizzaDataBase.findAllPizzas()[i];
-			if(pizzaDataBase.findAllPizzas()[i] != null) {
-				System.out.println("Pizza n°" + currentPizza.id + ": " + currentPizza.code + " -> " + currentPizza.libelle + "(" + currentPizza.prix + "€)");
-			}
+		for(FactoryItem currentItem : globalDataBase.myItemDao.findAllItem()) {
+			System.out.print(currentItem.itemArguments.defineType.typeName + " n°");
+			System.out.print(currentItem.id + " : ");
+			System.out.print(currentItem.code + " -> ");
+			System.out.print(currentItem.itemArguments.describe());
 		}
 	}
 

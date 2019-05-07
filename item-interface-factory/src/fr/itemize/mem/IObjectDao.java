@@ -1,9 +1,11 @@
 package fr.itemize.mem;
 
-import fr.pizzeria.model.*;
+import java.util.ArrayList;
+
+import fr.itemize.model.*;
 
 public interface IObjectDao {
-	String[] findAllType();
+	ArrayList<FactoryType> findAllType();
 	void addNewType(FactoryType type);
 	void deleteType(String codeType);
 	boolean typeExists(String codeType);

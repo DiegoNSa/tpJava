@@ -22,13 +22,14 @@ public class FactoryObject {
 		String describingString = "";
 		for(String key: argumentValues.keySet()) {
 			if(argumentValues.get(key) != null) {
-				describingString += argumentValues.get(key) + "- "; 
+				describingString += key + " = " + argumentValues.get(key) + "- "; 
 
 			}
 			else {
 				describingString += "null - "; 
 			} 
 		}
+		describingString += "\n";
 		return describingString;
 	}
 }
