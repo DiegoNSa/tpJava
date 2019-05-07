@@ -46,7 +46,7 @@ public class PizzariaAdminConsoleApp {
 				try{
 					menuFactory.getService(chosenOption).executerUC(pizzaDataBase);
 				}catch(PizzaException ex) {
-					System.out.println("opération invalide. cause : " + ex.getMessage());
+					System.out.println("opération invalide. Cause : " + ex.getMessage());
 				}
 			}
 

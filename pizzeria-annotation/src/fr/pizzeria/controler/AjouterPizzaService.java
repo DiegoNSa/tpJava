@@ -32,7 +32,7 @@ public class AjouterPizzaService extends MenuService {
 		Pizza newPizza;
 		newPizza = new Pizza(newCode, newName, newPrice,newCategory);
 		try {
-			Validator.validate(newPizza, "prix");
+			Validator.validate(newPizza);
 		}catch(Exception ex) {
 			throw new SavePizzaException(ex.getMessage() + "- prix invalide");
 		}

@@ -4,6 +4,7 @@ import fr.pizzaria.exception.*;
 import fr.pizzeria.mem.PizzaDao;
 import fr.pizzeria.model.CategoryPizza;
 import fr.pizzeria.model.Pizza;
+import fr.pizzeria.utils.Validator;
 
 public class ModifierPizzaService extends MenuService {
 
@@ -37,10 +38,19 @@ public class ModifierPizzaService extends MenuService {
 			throw new UpdatePizzaException("categorie " + modifiedCategoryName + " does not exists");
 		}
 		
-		pizzaToModify.code = modifiedCode;
-		pizzaToModify.libelle = modifiedName;
-		pizzaToModify.prix = modifiedPrice;
-		pizzaToModify.category = modifiedCategory;
+		Pizza newPizza = new Pizza(pizzaToModify.id,modifiedCode,modifiedName,modifiedPrice,modifiedCategory);
+		try {
+			Validator.validate(newPizza);
+		}catch(Exception ex) {
+			throw new SavePizzaException(ex.getMessage() + " - prix invalide");
+		}
+		
+		pizzaToModify.code = newPizza.code;
+		pizzaToModify.libelle = newPizza.libelle;
+		pizzaToModify.prix = newPizza.prix;
+		pizzaToModify.category = newPizza.category;
+		
+
 	}
 
 }

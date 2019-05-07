@@ -22,8 +22,9 @@ public class Pizza {
 		this.libelle = libelle;
 		this.prix = prix;
 		this.category = category;
-		StringUtils.convertString(this,"code");
-		StringUtils.convertString(this,"libelle");
+		//convert the strings accordingly to the annotation
+		
+		StringUtils.convertString(this);
 	}
 	public Pizza(int id,String code, String libelle, double prix, CategoryPizza category)  {
 		this.id = id;
@@ -31,8 +32,7 @@ public class Pizza {
 		this.libelle = libelle;
 		this.prix = prix;
 		this.category = category;
-		StringUtils.convertString(this,"code");
-		StringUtils.convertString(this,"libelle");
+		StringUtils.convertString(this);
 
 	}
 	
@@ -44,15 +44,7 @@ public class Pizza {
 		description += this.code + " -> ";
 		description += this.libelle + "(";
 		description +=  this.prix + "€)";
-		
-		switch(this.category){
-			case VIANDE: 
-				return description + " Viande";
-			case POISSON:
-				return description + " Poisson";
-			case SANS_VIANDE:
-				return description + " Sans Viande";
-		}
+		description += this.category.getDescription();
 		return description;
 	}
 }
