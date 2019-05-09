@@ -10,11 +10,19 @@ import converter.storage.*;
 public class ConverterConsole {
 
 	public static void main(String[] args) {
+		/*
 		File fileToRead = new File("test.csv");
 		CsvReader cr = new CsvReader();
 		StorageDataBase dataBase =  cr.readFile(fileToRead);
 		JsonWriter ymlWrite = new JsonWriter();
 		ymlWrite.printSpecificFormat(dataBase);
+		*/
+		
+		File fileToRead = new File("test.json");
+		JsonReader cr = new JsonReader();
+		StorageDataBase dataBase =  cr.readFile(fileToRead);
+
+
 	}
 
 }

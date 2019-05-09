@@ -1,0 +1,54 @@
+{
+  "name": "Project",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "precommit": "./node_modules/.bin/eslint src",
+    "flow": "flow",
+    "test": "jest"
+  },
+    "dependencies": {
+    "axios": "^0.18.0",
+    "install": "^0.12.2",
+    "jsc-android": "224109.x.x",
+    "moment": "^2.22.2",
+    "npm": "^6.9.0",
+    "prop-types": "^15.6.2",
+    "react": "16.4.1",
+    "react-native": "0.56.0",
+    "react-native-android-open-settings": "^1.2.0",
+    "react-native-config": "^0.11.5",
+ "react-native-device-info": "^0.24.3",
+    "react-native-dropdown": "^0.0.6",
+    "react-native-easy-grid": "^0.2.0",
+    "react-native-firebase": "^4.3.8",
+    "react-native-fs": "2.11.17",
+        "react-native-image-crop-picker": "0.21.0"
+        },
+  "devDependencies": {
+    "@babel/runtime": "^7.2.0",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.1",
+    "babel-jest": "23.4.2",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react-native": "5.0.2",
+    "colors": "^1.1.2",
+    "eslint": "^4.16.0",
+    "eslint-plugin-react": "^7.6.1",
+    "eslint-plugin-react-native": "^3.2.1",
+    "eslint-plugin-redux-saga": "^0.6.0",
+    "flow-bin": "^0.75.0",
+    "husky": "^0.14.3",
+    "jest": "23.4.2",
+    "react-test-renderer": "16.4.1",
+    "remote-redux-devtools": "^0.5.12"
+  },
+  "jest": {
+    "babel-eslint": "^8.2.1",
+    "preset": "react-native"
+  }
+}
+
+    
