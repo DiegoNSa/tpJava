@@ -6,6 +6,7 @@ public class StorageContainer extends StorageElement {
 	public ArrayList<StorageElement> propertyList;
 	
 	public StorageContainer() {
+		this.level = 0;
 		propertyList = new ArrayList<StorageElement>();
 	}
 	

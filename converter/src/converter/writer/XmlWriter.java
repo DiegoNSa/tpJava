@@ -6,11 +6,13 @@ public class XmlWriter implements GlobalWriter {
 
 	private static String getElementString(StorageElement el) {
 		if(el instanceof StorageContainer) {
-			getElementString((StorageContainer) el); 
+			System.out.println("bloblbo");
+
+			return getElementString((StorageContainer) el); 
 		}else {
+			System.out.println("blabal");
 			return getElementString((StorageValue<Object>) el); 
 		}
-		return "";
 	}
 
 	
@@ -24,31 +26,45 @@ public class XmlWriter implements GlobalWriter {
 		resString += tabulation + "<" + val.elementTag + ">";
 		resString += val.getValue().toString();
 
-		resString += "<" + val.elementTag + ">\n";
+		resString += "</" + val.elementTag + ">\n";
 
 		return resString;
 	}
 	
 	private static String getElementString(StorageContainer container) {
 		String resString = "";
+		String tabulation = "";
 
-		for(StorageElement prop : container.propertyList) {
-			String tabulation = "";
-			for(int i =0; i < prop.level;i++) {
-				tabulation += "\t";
-			}
-			resString += tabulation + "<" + prop.elementTag + ">\n";
-			resString += getElementString(prop);
-			resString += tabulation + "</" + prop.elementTag + ">\n";
+		for(int i =0; i < container.level;i++) {
+			tabulation += "\t";
 		}
+		if(container.elementTag != null) {
+			resString += tabulation + "<" + container.elementTag + ">\n";
+		}else
+		{
+			resString += tabulation + "<unnamed>\n";
+		}
+		
+		for(StorageElement prop : container.propertyList) {
+			
+			resString += getElementString(prop);
+		}
+		if(container.elementTag != null) {
+			resString += tabulation + "</" + container.elementTag + ">\n";
+		}else
+		{
+			resString += tabulation + "</unnamed>\n";
+		}
+		
 		return resString;
 	}
 	
 	@Override
-	public String getSpecificFormat(StoragaDataBase data) {
+	public String getSpecificFormat(StorageDataBase data) {
 		String resultString = ""; 
-		for(StorageElement element : data.datas) {
-			resultString += getElementString(element);
+		for(StorageElement container : data.datas) {
+			System.out.println("container : " + container.elementTag);
+			resultString += getElementString(container);
 		}
 		return resultString;
 	}
@@ -56,7 +72,7 @@ public class XmlWriter implements GlobalWriter {
 	
 	
 	@Override
-	public void printSpecificFormat(StoragaDataBase data) {
+	public void printSpecificFormat(StorageDataBase data) {
 		System.out.println(getSpecificFormat(data));
 	}
 

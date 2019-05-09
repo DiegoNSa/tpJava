@@ -1,9 +1,9 @@
 package converter.writer;
 
-import converter.storage.StoragaDataBase;
+import converter.storage.StorageDataBase;
 
 public interface GlobalWriter {
-	public String getSpecificFormat(StoragaDataBase data);
-	public void printSpecificFormat(StoragaDataBase data);
+	public String getSpecificFormat(StorageDataBase data);
+	public void printSpecificFormat(StorageDataBase data);
 
 }

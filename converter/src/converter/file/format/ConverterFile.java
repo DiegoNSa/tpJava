@@ -11,10 +11,10 @@ public abstract class ConverterFile {
 	public void openFile(String fileName) {
 		closeFile();
 		fileToRead = new File(fileName);
-		
-		
 	}
+	
 	public abstract void readFile();
+	
 	public  void closeFile() {
 		if(isOpen) {
 			try {
