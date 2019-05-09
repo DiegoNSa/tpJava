@@ -63,21 +63,20 @@ public class JsonReader implements GlobalReader {
 	
 	public StorageDataBase parseFile(BufferedReader br) {
 	    String line;
-		try {
-			line = br.readLine();
-			 StorageDataBase dataBase = new StorageDataBase();
-			 dataBase.addNewData(parseLine(br,line,null,dataBase));
-			 return dataBase;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	   
+		StorageDataBase dataBase = new StorageDataBase();
+		dataBase.addNewData(parseLine(br,null,null,dataBase));
+		return dataBase;	   
 	}
 	
 	public StorageContainer parseLine(BufferedReader br, String line,StorageContainer currentElement,StorageDataBase currentDataBase) {
 		String currentLine = line;
+		try {
+			currentLine = br.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		while(currentLine != null) {
+			System.out.println(currentLine);
 			currentLine = currentLine.trim();
 			String[] splitedLine = currentLine.split(":");
 			for(int i = 0; i < splitedLine.length;i++) {
@@ -90,7 +89,7 @@ public class JsonReader implements GlobalReader {
 				if(splitedLine[0].equals("{")) {
 					StorageContainer newContainer = new StorageContainer();
 					StorageContainer newElement = parseLine(br,currentLine,newContainer,currentDataBase);
-					currentElement.addNewElement(parseLine(br,currentLine,newContainer,currentDataBase));
+					currentElement.addNewElement(newElement);
 					
 				}else if(splitedLine[0].equals("}")) {
 					return currentElement;
