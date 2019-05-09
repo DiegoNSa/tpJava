@@ -14,4 +14,8 @@ public class StorageValue<T> extends StorageElement {
 	public void setValue(T newVal) {
 		elValue = newVal;
 	}
+	
+	public void setLevel(int level) {
+		this.level = level;
+	}
 }

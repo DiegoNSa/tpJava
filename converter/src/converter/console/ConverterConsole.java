@@ -13,8 +13,8 @@ public class ConverterConsole {
 		File fileToRead = new File("test.csv");
 		CsvReader cr = new CsvReader();
 		StorageDataBase dataBase =  cr.readFile(fileToRead);
-		XmlWriter xmlWrite = new XmlWriter();
-		xmlWrite.printSpecificFormat(dataBase);
+		JsonWriter ymlWrite = new JsonWriter();
+		ymlWrite.printSpecificFormat(dataBase);
 	}
 
 }

@@ -53,7 +53,7 @@ public class XmlWriter implements GlobalWriter {
 			resString += tabulation + "</" + container.elementTag + ">\n";
 		}else
 		{
-			resString += tabulation + "</unnamed>\n";
+			resString += tabulation + "<unnamed>\n";
 		}
 		
 		return resString;

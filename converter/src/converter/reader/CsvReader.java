@@ -50,6 +50,8 @@ public class CsvReader implements GlobalReader {
 			splitedString = stringList.toArray(splitedString);
 			for(int i =0;i< splitedString.length; i++) {
 				splitedString[i] = splitedString[i].replace("\"\"", "\"");
+				splitedString[i] = splitedString[i].trim();
+
 			}
 			return splitedString;
 		}
@@ -69,7 +71,8 @@ public class CsvReader implements GlobalReader {
 		    String[] parsedLine = parseLine(line);
 		    //printStringTable(parsedLine);
 		    tagName = parsedLine;
-		    
+        	StorageContainer superContainer = new StorageContainer(true);
+
 		    while (line != null) {
 		        line = br.readLine();
 		        if(line == null) {
@@ -77,16 +80,19 @@ public class CsvReader implements GlobalReader {
 		        }
 		        parsedLine = parseLine(line);
 			    //printStringTable(parsedLine);
-	        	StorageContainer container = new StorageContainer();
+	        	StorageContainer container = new StorageContainer(false);
 
 		        for(int i = 0; i < parsedLine.length;i++) {
-		        	StorageValue<String> newValue = new StorageValue<String>(tagName[i],parsedLine[i]);
-		        	System.out.println(newValue.elementTag + " " + newValue.getValue());
-		        	container.addNewElement(newValue);
+		        	if(!parsedLine[i].equals("-")) {
+		        		StorageValue<String> newValue = new StorageValue<String>(tagName[i],parsedLine[i]);
+		        		System.out.println(newValue.elementTag + " " + newValue.getValue());
+		        		container.addNewElement(newValue);
+		        	}
 		        }
 		        //System.out.println("line : " + line);
-		        storage.addNewData(container);
+        		superContainer.addNewElement(container);
 		    }
+	        storage.addNewData(superContainer);
 
 		}catch(Exception ex) {
 			System.out.println("error : " + ex.getMessage() + ex.toString());
