@@ -1,16 +1,26 @@
 package converter.writer;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
 import converter.storage.*;
+import converter.utils.FileFormat;
 
 public class XmlWriter implements GlobalWriter {
-
+	@FileFormat(supportedExtention = "xml")
+	public String fileName;
+	public XmlWriter(String fileName) {
+		this.fileName = fileName;
+	}
+	
 	private static String getElementString(StorageElement el) {
 		if(el instanceof StorageContainer) {
-			System.out.println("bloblbo");
+			//System.out.println("bloblbo");
 
 			return getElementString((StorageContainer) el); 
 		}else {
-			System.out.println("blabal");
+			//System.out.println("blabal");
 			return getElementString((StorageValue<Object>) el); 
 		}
 	}
@@ -63,7 +73,7 @@ public class XmlWriter implements GlobalWriter {
 	public String getSpecificFormat(StorageDataBase data) {
 		String resultString = ""; 
 		for(StorageElement container : data.datas) {
-			System.out.println("container : " + container.elementTag);
+			//System.out.println("container : " + container.elementTag);
 			resultString += getElementString(container);
 		}
 		return resultString;
@@ -74,6 +84,18 @@ public class XmlWriter implements GlobalWriter {
 	@Override
 	public void printSpecificFormat(StorageDataBase data) {
 		System.out.println(getSpecificFormat(data));
+	}
+	public void writeSpecificFormat(StorageDataBase data){
+		System.out.println("writing in " + fileName);
+		try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+			writer.println(getSpecificFormat(data));
+			writer.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

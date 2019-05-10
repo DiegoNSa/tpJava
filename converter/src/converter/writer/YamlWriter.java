@@ -1,11 +1,21 @@
 package converter.writer;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
 import converter.storage.StorageContainer;
 import converter.storage.StorageDataBase;
 import converter.storage.StorageElement;
 import converter.storage.StorageValue;
+import converter.utils.FileFormat;
 
 public class YamlWriter implements GlobalWriter{
+	@FileFormat(supportedExtention = "yml")
+	public String fileName;
+	public YamlWriter(String fileName) {
+		this.fileName = fileName;
+	}
 	
 	private static String getElementString(StorageElement el) {
 		return getElementString(el,"");
@@ -82,4 +92,17 @@ public class YamlWriter implements GlobalWriter{
 	public void printSpecificFormat(StorageDataBase data) {
 		System.out.println(getSpecificFormat(data));
 	}
+	
+	public void writeSpecificFormat(StorageDataBase data){
+		System.out.println("writing in " + fileName);
+		try(PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+			writer.println(getSpecificFormat(data));
+			writer.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

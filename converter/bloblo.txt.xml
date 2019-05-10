@@ -1,0 +1,52 @@
+	<name>Project</name>
+	<version>0.0.1</version>
+	<private>true</private>
+	<scripts>
+		<start>node node_modules/react-native/local-cli/cli.js start</start>
+		<precommit>./node_modules/.bin/eslint src</precommit>
+		<flow>flow</flow>
+		<test>jest</test>
+	</scripts>
+	<dependencies>
+		<axios>^0.18.0</axios>
+		<install>^0.12.2</install>
+		<jsc-android>224109.x.x</jsc-android>
+		<moment>^2.22.2</moment>
+		<npm>^6.9.0</npm>
+		<prop-types>^15.6.2</prop-types>
+		<react>16.4.1</react>
+		<react-native>0.56.0</react-native>
+		<react-native-android-open-settings>^1.2.0</react-native-android-open-settings>
+		<react-native-config>^0.11.5</react-native-config>
+		<react-native-device-info>^0.24.3</react-native-device-info>
+		<react-native-dropdown>^0.0.6</react-native-dropdown>
+		<react-native-easy-grid>^0.2.0</react-native-easy-grid>
+		<react-native-firebase>^4.3.8</react-native-firebase>
+		<react-native-fs>2.11.17</react-native-fs>
+		<react-native-image-crop-picker>0.21.0</react-native-image-crop-picker>
+	</dependencies>
+	<devDependencies>
+		<@babel/runtime>^7.2.0</@babel/runtime>
+		<babel-cli>^6.26.0</babel-cli>
+		<babel-eslint>^8.2.1</babel-eslint>
+		<babel-jest>23.4.2</babel-jest>
+		<babel-plugin-transform-regenerator>^6.26.0</babel-plugin-transform-regenerator>
+		<babel-preset-flow>^6.23.0</babel-preset-flow>
+		<babel-preset-react-native>5.0.2</babel-preset-react-native>
+		<colors>^1.1.2</colors>
+		<eslint>^4.16.0</eslint>
+		<eslint-plugin-react>^7.6.1</eslint-plugin-react>
+		<eslint-plugin-react-native>^3.2.1</eslint-plugin-react-native>
+		<eslint-plugin-redux-saga>^0.6.0</eslint-plugin-redux-saga>
+		<flow-bin>^0.75.0</flow-bin>
+		<husky>^0.14.3</husky>
+		<jest>23.4.2</jest>
+		<react-test-renderer>16.4.1</react-test-renderer>
+		<remote-redux-devtools>^0.5.12</remote-redux-devtools>
+	</devDependencies>
+	<jest>
+		<babel-eslint>^8.2.1</babel-eslint>
+		<preset>react-native</preset>
+	</jest>
+
+

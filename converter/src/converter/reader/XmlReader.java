@@ -8,9 +8,15 @@ import java.io.IOException;
 import converter.storage.StorageContainer;
 import converter.storage.StorageDataBase;
 import converter.storage.StorageValue;
+import converter.utils.FileFormat;
 
 public class XmlReader implements GlobalReader {
-
+	@FileFormat(supportedExtention = "xml")
+	public String fileName;
+	public XmlReader(String fileName) {
+		this.fileName = fileName;
+	}
+	
 	public static boolean isDouble(String str) {
 		if (str == null) {
 			return false;
@@ -77,12 +83,12 @@ public class XmlReader implements GlobalReader {
 		if(endIndex == -1) {
 			endIndex = fileString.length()-1;
 		}
-		System.out.println("new : " + startIndex + " / "  +endIndex);
-		System.out.println("bliblablo" + fileString.substring(startIndex,endIndex));
+		//System.out.println("new : " + startIndex + " / "  +endIndex);
+		//System.out.println("bliblablo" + fileString.substring(startIndex,endIndex));
 		int currentIndex = startIndex;
 		currentIndex = fileString.indexOf("<", currentIndex);
 		while(currentIndex < endIndex && currentIndex != -1) {
-			System.out.println("head : " + currentIndex);
+			//System.out.println("head : " + currentIndex);
 			int commentIndex = fileString.indexOf("<--", currentIndex);
 			int infoIndex = fileString.indexOf("<?", currentIndex);
 
@@ -106,7 +112,7 @@ public class XmlReader implements GlobalReader {
 				if(quoteIndex != -1 && quoteIndex < endLabelIndex) {
 					
 					String containerLabel = fileString.substring(currentIndex+1,spaceIndex).trim();
-					System.out.println(containerLabel);
+					//System.out.println(containerLabel);
 					StorageContainer newContainer = new StorageContainer();
 					int equalSymbolIndex = fileString.indexOf("=", currentIndex);
 
@@ -117,10 +123,10 @@ public class XmlReader implements GlobalReader {
 						inlineEndIndex = fileString.indexOf("/>", endQuoteIndex);
 						
 						StorageValue<String> newValue;
-						System.out.println(spaceIndex + " ///// " + equalSymbolIndex);
+						//System.out.println(spaceIndex + " ///// " + equalSymbolIndex);
 						String labelString = fileString.substring(spaceIndex,equalSymbolIndex).trim();
 						String valueString = fileString.substring(quoteIndex+1,endQuoteIndex).trim();
-						System.out.println(labelString + " == " + valueString);
+						//System.out.println(labelString + " == " + valueString);
 
 						newValue = new StorageValue<String>(labelString,valueString);
 						
@@ -130,10 +136,10 @@ public class XmlReader implements GlobalReader {
 						spaceIndex = fileString.indexOf(" ", endQuoteIndex+1);
 						equalSymbolIndex = fileString.indexOf("=", endQuoteIndex+1);
 						
-						System.out.println(quoteIndex + " --------- " + endLabelIndex);
+						//System.out.println(quoteIndex + " --------- " + endLabelIndex);
 
 					}
-					System.out.println("SOOOOOOOOOOOOOOOOOOOOORTIIIIIIIIIIIIIIIIIIIIIIE");
+					//System.out.println("SOOOOOOOOOOOOOOOOOOOOORTIIIIIIIIIIIIIIIIIIIIIIE");
 
 					if(endLabelIndex == inlineEndIndex + 1) {
 						if(currentContainer != null) {
@@ -210,9 +216,9 @@ public class XmlReader implements GlobalReader {
 	}
 
 	@Override
-	public StorageDataBase readFile(File fileToRead) {
+	public StorageDataBase readFile() {
 		StorageDataBase parsedData =  new StorageDataBase();
-		try (BufferedReader br = new BufferedReader(new FileReader(fileToRead))) {
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 		    String line = br.readLine();
 
 			try {
@@ -231,7 +237,7 @@ public class XmlReader implements GlobalReader {
 			ex.printStackTrace();
 			return null;
 		}
-		System.out.println("fin");
+		//System.out.println("fin");
 		return parsedData;
 	}
 

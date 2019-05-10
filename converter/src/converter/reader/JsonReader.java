@@ -9,9 +9,15 @@ import converter.storage.StorageContainer;
 import converter.storage.StorageDataBase;
 import converter.storage.StorageElement;
 import converter.storage.StorageValue;
+import converter.utils.FileFormat;
 
 public class JsonReader implements GlobalReader {
-
+	@FileFormat(supportedExtention = "json")
+	public String fileName;
+	public JsonReader(String fileName) {
+		this.fileName = fileName;
+	}
+	
 	public static boolean isDouble(String str) {
 		if (str == null) {
 			return false;
@@ -86,9 +92,13 @@ public class JsonReader implements GlobalReader {
 			if (splitedLine.length == 1) {
 				splitedLine[0] = splitedLine[0].replace('\"', ' ');
 				splitedLine[0] = splitedLine[0].trim();
-				if (splitedLine[0].contains("{")) {
+				if (splitedLine[0].contains("{") || splitedLine[0].contains("[")) {
 					StorageContainer newContainer = new StorageContainer();
 					StorageContainer newElement = parseLine(br, currentLine, newContainer, currentDataBase);
+					
+					if(splitedLine[0].contains("[")) {
+						newContainer.isEnum = true;
+					}
 					if(newElement != null) {
 
 						if (currentElement != null) {
@@ -97,7 +107,7 @@ public class JsonReader implements GlobalReader {
 							currentDataBase.addNewData(newElement);
 						}
 					}
-				} else if (splitedLine[0].contains("}")) {
+				} else if (splitedLine[0].contains("}") || splitedLine[0].contains("]")) {
 					return currentElement;
 				} else {
 					System.out.print("error = " + splitedLine[0]);
@@ -106,8 +116,11 @@ public class JsonReader implements GlobalReader {
 				splitedLine[0] = splitedLine[0].replace('\"', ' ');
 				splitedLine[0] = splitedLine[0].trim();
 				splitedLine[1] = splitedLine[1].trim();
-				if (splitedLine[1].contains("{")) {
+				if (splitedLine[1].contains("{") || splitedLine[1].contains("[")) {
 					StorageContainer newContainer = new StorageContainer();
+					if(splitedLine[1].contains("[")) {
+						newContainer.isEnum = true;
+					}
 					newContainer.elementTag = splitedLine[0];
 					StorageContainer newElement = parseLine(br, currentLine, newContainer, currentDataBase);
 					if(newElement != null) {
@@ -140,7 +153,7 @@ public class JsonReader implements GlobalReader {
 
 						} else {
 							StorageValue<Boolean> newValue;
-							System.out.println(splitedLine[1]);
+							//System.out.println(splitedLine[1]);
 							if(splitedLine[1].contains("true")) {
 								newValue = new StorageValue<Boolean>(splitedLine[0],
 										true);
@@ -164,9 +177,9 @@ public class JsonReader implements GlobalReader {
 	}
 
 	@Override
-	public StorageDataBase readFile(File fileToRead) {
+	public StorageDataBase readFile() {
 		StorageDataBase parsedData;
-		try (BufferedReader br = new BufferedReader(new FileReader(fileToRead))) {
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 			parsedData = parseFile(br);
 
 		} catch (Exception ex) {
@@ -177,7 +190,7 @@ public class JsonReader implements GlobalReader {
 			}
 			return null;
 		}
-		System.out.println("fin");
+		//System.out.println("fin");
 		return parsedData;
 	}
 }

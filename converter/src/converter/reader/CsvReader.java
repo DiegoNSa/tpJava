@@ -1,6 +1,8 @@
 package converter.reader;
 
 import converter.storage.*;
+import converter.utils.FileFormat;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,7 +10,11 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class CsvReader implements GlobalReader {
-
+	@FileFormat(supportedExtention = "csv")
+	public String fileName;
+	public CsvReader(String fileName) {
+		this.fileName = fileName;
+	}
 
 	public static void printStringTable(String[] stringTable) {
 		for(int i =0;i< stringTable.length; i++) {
@@ -59,12 +65,12 @@ public class CsvReader implements GlobalReader {
 	}
 	
 	@Override
-	public StorageDataBase readFile(File fileToRead) {
+	public StorageDataBase readFile() {
 		StorageDataBase storage = new StorageDataBase();
 		String[] tagName;
 		
 		
-		try(BufferedReader br = new BufferedReader(new FileReader(fileToRead))) {
+		try(BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 		   // StringBuilder sb = new StringBuilder();
 		    String line = br.readLine();
 
@@ -100,7 +106,7 @@ public class CsvReader implements GlobalReader {
 				System.out.println(ex.getStackTrace()[i].getClassName() + " - line " +ex.getStackTrace()[i].getLineNumber() );
 			}
 		}
-		System.out.println("fin");
+		//System.out.println("fin");
 		return storage;
 	}
 
