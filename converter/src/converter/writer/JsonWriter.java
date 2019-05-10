@@ -35,7 +35,7 @@ public class JsonWriter implements GlobalWriter {
 		reducedTag = reducedTag.trim();
 
 		resString += tabulation+ preString + "\"" + reducedTag + "\":";
-		resString += val.getValue().toString() + "\n";
+		resString += val.getValue().toString() + ",\n";
 		return resString;
 	}
 	
@@ -78,7 +78,7 @@ public class JsonWriter implements GlobalWriter {
 		if(container.isEnum) {
 			resString += tabulation + "]\n";
 		}else {
-			resString += tabulation + preString + "}\n";
+			resString += tabulation + preString + "},\n";
 		}
 		return resString;
 	}

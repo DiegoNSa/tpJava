@@ -18,4 +18,12 @@ public class StorageValue<T> extends StorageElement {
 	public void setLevel(int level) {
 		this.level = level;
 	}
+	
+	public void print() {
+		String printString = "";
+		for(int i = 0; i < this.level; i++) {
+			printString += "-";
+		}
+		System.out.println(printString + this.elementTag + "=" + this.getValue());
+	}
 }

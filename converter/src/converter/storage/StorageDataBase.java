@@ -12,4 +12,10 @@ public class StorageDataBase {
 	public void addNewData(StorageElement newData) {
 		datas.add(newData);
 	}
+	
+	public void print() {
+		for(StorageElement data : datas) {
+			data.print();
+		}
+	}
 }

@@ -42,7 +42,7 @@ public class XmlWriter implements GlobalWriter {
 			resString += tabulation + "<" + container.elementTag + ">\n";
 		}else
 		{
-			resString += tabulation + "<unnamed>\n";
+			resString += tabulation;
 		}
 		
 		for(StorageElement prop : container.propertyList) {
@@ -53,7 +53,7 @@ public class XmlWriter implements GlobalWriter {
 			resString += tabulation + "</" + container.elementTag + ">\n";
 		}else
 		{
-			resString += tabulation + "<unnamed>\n";
+			resString += tabulation + "\n";
 		}
 		
 		return resString;

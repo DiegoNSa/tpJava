@@ -5,5 +5,6 @@ public abstract class StorageElement {
 	public String elementTag;
 	
 	public abstract void setLevel(int level);
+	public abstract void print();
 
 }

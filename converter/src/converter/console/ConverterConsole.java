@@ -21,7 +21,9 @@ public class ConverterConsole {
 		File fileToRead = new File("test.json");
 		JsonReader cr = new JsonReader();
 		StorageDataBase dataBase =  cr.readFile(fileToRead);
-
+		
+		YamlWriter ymlWrite = new YamlWriter();
+		ymlWrite.printSpecificFormat(dataBase);
 
 	}
 

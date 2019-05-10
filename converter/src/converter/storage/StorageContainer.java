@@ -34,4 +34,15 @@ public class StorageContainer extends StorageElement {
 		}
 		propertyList.add(newEl);
 	}
+	
+	public void print() {
+		String printString = "";
+		for(int i = 0; i < this.level; i++) {
+			printString += "-";
+		}
+		System.out.println(printString + this.elementTag + ":");
+		for(StorageElement el : propertyList) {
+			el.print();
+		}
+	}
 }
