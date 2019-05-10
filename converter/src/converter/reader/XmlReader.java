@@ -73,13 +73,16 @@ public class XmlReader implements GlobalReader {
 		return false;
 	}
 
-	public void parseFile(StringBuilder fileString, StorageDataBase dataBase, StorageContainer currentContainer,int startIndex, int endIndex) {
-		String line;
-		System.out.print("new");
+	public static void parseFile(StringBuilder fileString, StorageDataBase dataBase, StorageContainer currentContainer,int startIndex, int endIndex) {
+		if(endIndex == -1) {
+			endIndex = fileString.length()-1;
+		}
+		System.out.println("new : " + startIndex + " / "  +endIndex);
+		System.out.println("bliblablo" + fileString.substring(startIndex,endIndex));
 		int currentIndex = startIndex;
 		currentIndex = fileString.indexOf("<", currentIndex);
 		while(currentIndex < endIndex && currentIndex != -1) {
-			
+			System.out.println("head : " + currentIndex);
 			int commentIndex = fileString.indexOf("<--", currentIndex);
 			int infoIndex = fileString.indexOf("<?", currentIndex);
 
@@ -102,42 +105,49 @@ public class XmlReader implements GlobalReader {
 				//property contains values
 				if(quoteIndex != -1 && quoteIndex < endLabelIndex) {
 					
-					int endQuoteIndex = fileString.indexOf("\"", quoteIndex+1);
-					endLabelIndex = fileString.indexOf(">", endQuoteIndex);
-					inlineEndIndex = fileString.indexOf("/>", endQuoteIndex);
-
 					String containerLabel = fileString.substring(currentIndex+1,spaceIndex).trim();
 					System.out.println(containerLabel);
 					StorageContainer newContainer = new StorageContainer();
-					newContainer.elementTag=fileString.substring(currentIndex+1, spaceIndex);
-					while(quoteIndex < endIndex && quoteIndex != -1) {
-						StorageValue<String> newValue;
-						int equalSymbolIndex = fileString.indexOf("=", currentIndex);
-						String labelString = fileString.substring(spaceIndex,equalSymbolIndex).trim();
-						String valueString = fileString.substring(quoteIndex,endQuoteIndex).trim();
+					int equalSymbolIndex = fileString.indexOf("=", currentIndex);
+
+					newContainer.elementTag=containerLabel;
+					while(quoteIndex < endIndex && quoteIndex != -1 && quoteIndex < endLabelIndex) {
+						int endQuoteIndex = fileString.indexOf("\"", quoteIndex+1);
+						endLabelIndex = fileString.indexOf(">", endQuoteIndex);
+						inlineEndIndex = fileString.indexOf("/>", endQuoteIndex);
 						
+						StorageValue<String> newValue;
+						System.out.println(spaceIndex + " ///// " + equalSymbolIndex);
+						String labelString = fileString.substring(spaceIndex,equalSymbolIndex).trim();
+						String valueString = fileString.substring(quoteIndex+1,endQuoteIndex).trim();
+						System.out.println(labelString + " == " + valueString);
+
 						newValue = new StorageValue<String>(labelString,valueString);
 						
 						newContainer.addNewElement(newValue);
+
 						quoteIndex = fileString.indexOf("\"", endQuoteIndex+1);
-						endQuoteIndex = fileString.indexOf("\"", quoteIndex+1);
-						endLabelIndex = fileString.indexOf(">", endQuoteIndex);
-						inlineEndIndex = fileString.indexOf("/>", endQuoteIndex);
+						spaceIndex = fileString.indexOf(" ", endQuoteIndex+1);
+						equalSymbolIndex = fileString.indexOf("=", endQuoteIndex+1);
+						
+						System.out.println(quoteIndex + " --------- " + endLabelIndex);
+
 					}
-					
+					System.out.println("SOOOOOOOOOOOOOOOOOOOOORTIIIIIIIIIIIIIIIIIIIIIIE");
+
 					if(endLabelIndex == inlineEndIndex + 1) {
 						if(currentContainer != null) {
 							currentContainer.addNewElement(newContainer);
 						}else {
 							dataBase.addNewData(newContainer);
 						}
-						currentIndex = inlineEndIndex+1;
+						currentIndex = fileString.indexOf("<",inlineEndIndex+1);
 					}else {
 						int endPropertyIndex = fileString.indexOf("</"+containerLabel, endLabelIndex);
-						int nextDeclaration = fileString.indexOf("<"+containerLabel, endLabelIndex);
+						int nextDeclaration = fileString.indexOf("<", endLabelIndex);
 						if(endPropertyIndex == nextDeclaration) {
 							if(endPropertyIndex == -1) {
-								System.out.println("error : fdjqsklfjklsqlj");
+								System.out.println("error : " + containerLabel);
 							}else {
 								if(currentContainer != null) {
 									currentContainer.addNewElement(newContainer);
@@ -146,9 +156,14 @@ public class XmlReader implements GlobalReader {
 								}
 							}
 						}else{
-							parseFile(fileString, dataBase, newContainer,endLabelIndex,endPropertyIndex);
+							parseFile(fileString, dataBase, newContainer,endLabelIndex+1,endPropertyIndex);
+							if(currentContainer != null) {
+								currentContainer.addNewElement(newContainer);
+							}else {
+								dataBase.addNewData(newContainer);
+							}
 						}
-						currentIndex = endPropertyIndex+1;
+						currentIndex = fileString.indexOf("<",endPropertyIndex+1);
 					}
 					//property does not contain value
 				}else {
@@ -173,8 +188,13 @@ public class XmlReader implements GlobalReader {
 					}else{
 						StorageContainer newContainer = new StorageContainer();
 						parseFile(fileString, dataBase, newContainer,endLabelIndex,endPropertyIndex);
+						if(currentContainer != null) {
+							currentContainer.addNewElement(newContainer);
+						}else {
+							dataBase.addNewData(newContainer);
+						}
 					}
-					currentIndex = endPropertyIndex+1;
+					currentIndex = fileString.indexOf("<",endPropertyIndex+1);
 
 				}
 			}
@@ -182,118 +202,16 @@ public class XmlReader implements GlobalReader {
 		return;
 	}
 
-	public StorageContainer parseLine(BufferedReader br, String line, StorageContainer currentElement,
-			StorageDataBase currentDataBase) {
-		String currentLine = line;
-		try {
-			currentLine = br.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		while (currentLine != null) {
-			//System.out.println(currentLine);
-			currentLine = currentLine.trim();
-			if(currentLine.charAt(0) == '<') {
-				//opening property
-				int i = currentLine.indexOf(">", 0);
-				int j = currentLine.indexOf(" ", 0);
-				int k = currentLine.indexOf("/>", 0);
-				
-				if(j != -1) {
-					do {
-						j = currentLine.indexOf(" ", j+1);
-					}while(j!=-1);
-				}
-				
-			}
-			String[] splitedLine = currentLine.split(":");
-			for (int i = 0; i < splitedLine.length; i++) {
-				// splitedLine[i]=splitedLine[i].replace('\"',' ');
-				splitedLine[i] = splitedLine[i].trim();
-			}
-			if (splitedLine.length == 1) {
-				splitedLine[0] = splitedLine[0].replace('\"', ' ');
-				splitedLine[0] = splitedLine[0].trim();
-				if (splitedLine[0].contains("{")) {
-					StorageContainer newContainer = new StorageContainer();
-					StorageContainer newElement = parseLine(br, currentLine, newContainer, currentDataBase);
-					if(newElement != null) {
-
-						if (currentElement != null) {
-							currentElement.addNewElement(newElement);
-						} else {
-							currentDataBase.addNewData(newElement);
-						}
-					}
-				} else if (splitedLine[0].contains("}")) {
-					return currentElement;
-				} else {
-					System.out.print("error = " + splitedLine[0]);
-				}
-			} else {
-				splitedLine[0] = splitedLine[0].replace('\"', ' ');
-				splitedLine[0] = splitedLine[0].trim();
-				splitedLine[1] = splitedLine[1].trim();
-				if (splitedLine[1].contains("{")) {
-					StorageContainer newContainer = new StorageContainer();
-					newContainer.elementTag = splitedLine[0];
-					StorageContainer newElement = parseLine(br, currentLine, newContainer, currentDataBase);
-					if(newElement != null) {
-						if (currentElement != null) {
-							currentElement.addNewElement(newElement);
-						} else {
-							currentDataBase.addNewData(newElement);
-						}
-					}
-				} else {
-					if (splitedLine[1].charAt(splitedLine[1].length() - 1) == ',') {
-						splitedLine[1] = splitedLine[1].substring(0, splitedLine[1].length() - 1);
-					}
-					if (splitedLine[1].charAt(0) == '\"') {
-						splitedLine[1] = splitedLine[1].replace('\"', ' ');
-						splitedLine[1] = splitedLine[1].trim();
-						StorageValue<String> newValue = new StorageValue<String>(splitedLine[0], splitedLine[1]);
-						currentElement.addNewElement(newValue);
-					} else {
-						splitedLine[1] = splitedLine[1].trim();
-						if (isDouble(splitedLine[1])) {
-							StorageValue<Double> newValue = new StorageValue<Double>(splitedLine[0],
-									Double.parseDouble(splitedLine[1]));
-							currentElement.addNewElement(newValue);
-
-						} else if (isInteger(splitedLine[1])) {
-							StorageValue<Integer> newValue = new StorageValue<Integer>(splitedLine[0],
-									Integer.parseInt(splitedLine[1]));
-							currentElement.addNewElement(newValue);
-
-						} else {
-							StorageValue<Boolean> newValue;
-							System.out.println(splitedLine[1]);
-							if(splitedLine[1].contains("true")) {
-								newValue = new StorageValue<Boolean>(splitedLine[0],
-										true);
-							}else {
-								newValue = new StorageValue<Boolean>(splitedLine[0],
-										false);
-							}
-							currentElement.addNewElement(newValue);
-						}
-					}
-				}
-
-			}
-			try {
-				currentLine = br.readLine();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
+	public static StorageDataBase parseFile(StringBuilder fileString) {
+		StorageDataBase newDataBase = new StorageDataBase();
+		parseFile(fileString,newDataBase,null,0,fileString.length()-1);
+		return newDataBase;
+		
 	}
 
 	@Override
 	public StorageDataBase readFile(File fileToRead) {
-		StorageDataBase parsedData;
+		StorageDataBase parsedData =  new StorageDataBase();
 		try (BufferedReader br = new BufferedReader(new FileReader(fileToRead))) {
 		    String line = br.readLine();
 
@@ -305,15 +223,12 @@ public class XmlReader implements GlobalReader {
 			        	oneLineDoc.append(line + " ");
 			        }
 			    }
+			    parsedData = parseFile(oneLineDoc);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} catch (Exception ex) {
-			System.out.println("error : " + ex.getMessage() + ex.toString());
-			for (int i = 0; i < ex.getStackTrace().length; i++) {
-				System.out.println(
-						ex.getStackTrace()[i].getClassName() + " - line " + ex.getStackTrace()[i].getLineNumber());
-			}
+			ex.printStackTrace();
 			return null;
 		}
 		System.out.println("fin");

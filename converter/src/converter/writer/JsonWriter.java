@@ -35,7 +35,7 @@ public class JsonWriter implements GlobalWriter {
 		reducedTag = reducedTag.trim();
 
 		resString += tabulation+ preString + "\"" + reducedTag + "\":";
-		resString += val.getValue().toString() + ",\n";
+		resString += "\"" + val.getValue().toString() + "\",\n";
 		return resString;
 	}
 	
@@ -85,10 +85,11 @@ public class JsonWriter implements GlobalWriter {
 	
 	@Override
 	public String getSpecificFormat(StorageDataBase data) {
-		String resultString = ""; 
+		String resultString = "{\n"; 
 		for(StorageElement container : data.datas) {
 			resultString += getElementString(container);
 		}
+		resultString += "}";
 		return resultString;
 	}
 
