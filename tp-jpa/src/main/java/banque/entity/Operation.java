@@ -24,7 +24,7 @@ public abstract class Operation {
 	private String motif;
 	
 	@ManyToOne
-	@JoinColumn(name="ID")
+	@JoinColumn(name="COMPTE_ID")
 	private Compte compte;
 
 	

@@ -6,11 +6,11 @@ import javax.persistence.*;
 
 @Entity
 public class AssuranceVie extends Compte{
-	@Column(name="TAUX",length=50,nullable=false)
+	@Column(name="TAUX",length=50)
 	private Double taux;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="DATE_FIN",nullable=false)
+	@Column(name="DATE_FIN")
 	private Date dateFin;
 
 	//----- get set -----

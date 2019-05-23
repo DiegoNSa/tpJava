@@ -23,7 +23,7 @@ public class Client {
 	private Date dateNaissance;
 	
 	@ManyToOne
-	@JoinColumn(name="ID")
+	@JoinColumn(name="BANQUE_ID")
 	private Banque banque;
 
 	@Embedded
@@ -35,7 +35,9 @@ public class Client {
 	inverseJoinColumns=@JoinColumn(name="ID_COM",referencedColumnName="ID"))
 	private Set<Compte> comptes;
 	
-	
+	public Client() {
+		comptes = new HashSet<Compte>();
+	}
 	//----- get set -----
 	public Integer getId() {
 		return id;

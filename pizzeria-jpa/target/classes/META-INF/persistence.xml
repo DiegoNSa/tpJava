@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+ http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+	version="1.0">
+
+	<persistence-unit name="pizzeria-jpa"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		
+		<class>fr.pizzeria.model.Pizza</class>
+		
+		<properties>
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/pizzeria" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="" />
+		</properties>
+	</persistence-unit>
+
+	<persistence-unit name="banque-tp-jpa"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+		<class>banque.entity.Adresse</class>
+		<class>banque.entity.Banque</class>
+		<class>banque.entity.Client</class>
+		<class>banque.entity.Compte</class>
+		<class>banque.entity.Operation</class>
+
+		<class>banque.entity.LivretA</class>
+		<class>banque.entity.AssuranceVie</class>
+		<class>banque.entity.Virement</class>
+
+		<properties>
+			<property name="hibernate.archive.autodetection" value="" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="true" />
+
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/banque" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="" />
+			<property
+				name="javax.persistence.schema-generation.database.action"
+				value="drop-and-create" />
+		</properties>
+	</persistence-unit>
+
+</persistence>

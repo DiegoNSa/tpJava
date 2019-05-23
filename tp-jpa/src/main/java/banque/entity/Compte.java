@@ -7,10 +7,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="compte")
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Compte {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public class Compte {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 
 	@Column(name="NUMERO",length=50,nullable=false)

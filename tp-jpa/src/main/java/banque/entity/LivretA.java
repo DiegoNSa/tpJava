@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name="livretA")
 public class LivretA extends Compte{
 	
-	@Column(name="TAUX",length=50,nullable=false)
+	@Column(name="TAUX",length=50)
 	private Double taux;
 
 	
