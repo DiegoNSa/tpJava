@@ -82,4 +82,14 @@ public class Pizza {
 		description += this.category.getDescription();
 		return description;
 	}
+	
+	public boolean equals (Object obj)
+	  {
+	   if (this==obj) return true;
+	   if (this == null) return false;
+	   if (this.getClass() != obj.getClass()) return false;
+	   // Class name is Employ & have lastname
+	   Pizza piz = (Pizza) obj ;
+	   return this.code == piz.code && this.libelle == piz.libelle && this.prix == piz.prix && this.category == piz.category;
+	   }
 }
